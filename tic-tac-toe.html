@@ -8,26 +8,33 @@
 </head>
 <body>
     <h1 class = "gameTitle">tic-tac-toe</h1>
-    <div class = "mainBox">
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-        <button type = "button" class = "box"><div class="subBox"></div></button>
-    </div>
-    <div class = "gameInfo">
-        <h2 id="player1">Player 1:- </h2>
-        <h2 id="player2">Player 2:- </h2>
-        <h1 id = "turn">
-            <span>Turn:</span><br>
-            <h1 id = "winner"></h1>
-            
-        </h1> 
-    </div>    
+    <main>
+        <div class = "mainBox">
+            <div class="menu">
+                <button type="button" class = "reset">Reset</button>
+                <button type="button">Rapidfire</button>
+            </div>
+            <div class = "gameBox">
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+                <button type = "button" class = "box"></button>
+            </div>
+            <div class="gameInfo">
+                <div class="symbolContainer">
+                    <button class = "chosenSymbol" id = "X">X</button>
+                    <button class = "symbol" id = "O">O</button>
+                </div>
+                <h1 class="turnH">Turn:- <span class="turn"></span></h1>
+                <h1 class = "winner"></h1>
+            </div>
+        </div>
+    </main>    
     <script src = "t3.js"></script>
 
 </body>

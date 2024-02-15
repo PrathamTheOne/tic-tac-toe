@@ -1,79 +1,98 @@
-// prompt returns string
-// let player1 = prompt("Enter player1's name: ");
-// let symbol1 = prompt("Enter player1's symbol: ");
-// document.querySelector("#player1").append(player1);
-// document.querySelector("#player1").append(" = ");
-// document.querySelector("#player1").append(symbol1);
-
-// let player2 = prompt("Enter player2's name: ");
-// let symbol2 = prompt("Enter player2's symbol: ");
-// document.querySelector("#player2").append(player2);
-// document.querySelector("#player2").append(" = ");
-// document.querySelector("#player2").append(symbol2);
-function newGame(k){
-    let cl = document.createElement("button");
-    cl.style.backgroundColor = "aqua";
-    cl.style.color = "black";
-    cl.innerHTML = "New Game";
-    cl.addEventListener("click", ()=>{
-        for(let j = 0; j < 9; j++){
-            div[j].innerHTML = ""; 
+function chooseSymbol(){
+    let SymbolX = document.querySelector("#X");
+    let SymbolO = document.querySelector("#O");
+    SymbolO.addEventListener("click", () => {
+        SymbolO.classList.add("chosenSymbol");
+        player1 = "O";
+        player2 = "X";
+        SymbolX.style.backgroundColor = "white";
+        SymbolX.disabled = true;
+    });
+    SymbolX.addEventListener("click", () => {
+        SymbolX.classList.add("chosenSymbol");
+        player1 = "X";
+        player2 = "O";
+        SymbolO.style.backgroundColor = "white";
+        SymbolO.disabled = false;
+    });
+}
+function checkWinner(){
+    const patterns = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5 ,8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+    for(let pattern of patterns){
+        let value1 = box[pattern[0]].innerHTML;
+        let value2 = box[pattern[1]].innerHTML;
+        let value3 = box[pattern[2]].innerHTML;
+        if(value1 != "" && value2 != "" && value3 != ""){
+            if(value1 === value2 && value2 === value3){
+                turnH.style.display = "none";
+                winner.innerHTML = "Winner is <br>" + value1;
+                winner.style.fontSize = "5.5em";
+                winner.style.color = "olive";
+                winner.style.textAlign = "center";
+                disable();
+                newGame();
+            }
+        }
+    }
+}
+function disable(){
+    for(let i = 0; i < 9; i++){
+        box[i].disabled = true; 
+    }
+}
+function newGame(){
+    let NGbutton = document.createElement("button");
+    winner.append(NGbutton);
+    NGbutton.innerHTML = "New Game";
+    NGbutton.addEventListener("click", () => {
+        for(let i = 0; i < 9; i++){
+            box[i].disabled = false;
+            box[i].innerHTML = "";
         }
         winner.innerHTML = "";
-        cl.remove();
-        // for(let r = k; r < 9; r++){
-        //     div[r].remove();
-        // }
+        turnH.style.display = "block";
+        playersTurn.innerHTML = "";
+        turn = true;
+        SymbolO.disabled = false;
+        SymbolX.disabled = false;
     });
-    winner.after(cl);
 }
-
-let button = document.querySelectorAll(".box");
-let div = document.querySelectorAll(".subBox");
-let winner = document.querySelector("#winner");
-let turn = "p1";
-for(let i = 0; i < 9; i++){
-    button[i].addEventListener("click", ()=>{
-        if(turn === "p1"){
-            var symbol = "X";
-            turn = "p2";
-            // console.log("player1");
-            console.log(i);
-        }else{
-            var symbol = "O";
-            turn = "p1";
-            //console.log("player2");
-            console.log(i);
-        }    
-        div[i].innerHTML = symbol;
-        console.log(i);
-        // console.log(symbol);
-        if (
-            (div[0].innerHTML === "X" && div[1].innerHTML === "X" && div[2].innerHTML === "X") ||
-            (div[3].innerHTML === "X" && div[4].innerHTML === "X" && div[5].innerHTML === "X") ||
-            (div[6].innerHTML === "X" && div[7].innerHTML === "X" && div[8].innerHTML === "X") ||
-            (div[0].innerHTML === "X" && div[3].innerHTML === "X" && div[6].innerHTML === "X") ||
-            (div[1].innerHTML === "X" && div[4].innerHTML === "X" && div[7].innerHTML === "X") ||
-            (div[2].innerHTML === "X" && div[5].innerHTML === "X" && div[8].innerHTML === "X") ||
-            (div[0].innerHTML === "X" && div[4].innerHTML === "X" && div[8].innerHTML === "X") ||
-            (div[2].innerHTML === "X" && div[4].innerHTML === "X" && div[6].innerHTML === "X")
-        ) {
-            winner.innerHTML = "Player-1 wins";
-            newGame(i);
-        } else if (
-            (div[0].innerHTML === "O" && div[1].innerHTML === "O" && div[2].innerHTML === "O") ||
-            (div[3].innerHTML === "O" && div[4].innerHTML === "O" && div[5].innerHTML === "O") ||
-            (div[6].innerHTML === "O" && div[7].innerHTML === "O" && div[8].innerHTML === "O") ||
-            (div[0].innerHTML === "O" && div[3].innerHTML === "O" && div[6].innerHTML === "O") ||
-            (div[1].innerHTML === "O" && div[4].innerHTML === "O" && div[7].innerHTML === "O") ||
-            (div[2].innerHTML === "O" && div[5].innerHTML === "O" && div[8].innerHTML === "O") ||
-            (div[0].innerHTML === "O" && div[4].innerHTML === "O" && div[8].innerHTML === "O") ||
-            (div[2].innerHTML === "O" && div[4].innerHTML === "O" && div[6].innerHTML === "O")
-        ) {
-            winner.innerHTML = "Player-2 wins";
-            newGame();
+function Reset(){
+    resetB.addEventListener("click", ()=>{
+        for(let i = 0; i < 9; i++){
+            box[i].disabled = false;
+            box[i].innerHTML = "";
         }
-        
+        turn = true;
+        playersTurn.innerHTML = "";
     });
-    // console.log(i);
+}
+let box = document.querySelectorAll(".box");
+let playersTurn = document.querySelector(".turn");
+let winner = document.querySelector(".winner");
+let turnH = document.querySelector(".turnH");
+let resetB = document.querySelector(".reset");
+let player1 = "X";
+let player2 = "O";
+chooseSymbol();
+let turn = true;
+Reset();
+for(let i = 0; i < 9; i++){
+    box[i].addEventListener("click", () => {
+        if(turn === true){
+            box[i].innerHTML = player1;
+            playersTurn.innerHTML = player2;
+            turn = false;
+        } else {
+            box[i].innerHTML = player2;
+            playersTurn.innerHTML = player1;
+            turn = true;
+        }
+        box[i].disabled = true;
+        checkWinner();
+    });
 }
