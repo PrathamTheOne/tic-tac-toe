@@ -1,21 +1,3 @@
-function chooseSymbol(){
-    let SymbolX = document.querySelector("#X");
-    let SymbolO = document.querySelector("#O");
-    SymbolO.addEventListener("click", () => {
-        SymbolO.classList.add("chosenSymbol");
-        player1 = "O";
-        player2 = "X";
-        SymbolX.style.backgroundColor = "white";
-        SymbolX.disabled = true;
-    });
-    SymbolX.addEventListener("click", () => {
-        SymbolX.classList.add("chosenSymbol");
-        player1 = "X";
-        player2 = "O";
-        SymbolO.style.backgroundColor = "white";
-        SymbolO.disabled = false;
-    });
-}
 function checkWinner(){
     const patterns = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -31,7 +13,6 @@ function checkWinner(){
                 turnH.style.display = "none";
                 winner.innerHTML = "Winner is <br>" + value1;
                 winner.style.fontSize = "5.5em";
-                winner.style.color = "olive";
                 winner.style.textAlign = "center";
                 disable();
                 newGame();
@@ -57,8 +38,6 @@ function newGame(){
         turnH.style.display = "block";
         playersTurn.innerHTML = "";
         turn = true;
-        SymbolO.disabled = false;
-        SymbolX.disabled = false;
     });
 }
 function Reset(){
@@ -76,9 +55,9 @@ let playersTurn = document.querySelector(".turn");
 let winner = document.querySelector(".winner");
 let turnH = document.querySelector(".turnH");
 let resetB = document.querySelector(".reset");
+
 let player1 = "X";
 let player2 = "O";
-chooseSymbol();
 let turn = true;
 Reset();
 for(let i = 0; i < 9; i++){
